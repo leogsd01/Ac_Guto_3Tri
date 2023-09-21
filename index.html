@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC - Guto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        #intro-page {
+            background-color: #344a62;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            border: 5px solid #fff;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #start-button {
+            background-color: #fff;
+            color: #344a62;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #start-button:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="intro-page">
+        <h1>Seja Bem vindo a Ac!</h1>
+        <p>Alan Turing, um pioneiro da computação, desempenhou um papel fundamental <br> no desenvolvimento das máquinas que moldaram nosso mundo digital. <br> Vamos ver como essa máquina funciona?</p>
+        <button id="start-button" onclick="window.location.href='simulador.html'">Começar</button>
+    </div>
+</body>
+</html>

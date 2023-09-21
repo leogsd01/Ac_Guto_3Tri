@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computador Interativo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1d1c4b;
+        }
+
+        #desktop {
+            background-image: url('desktop-background.jpg'); /* Substitua 'desktop-background.jpg' pela URL da sua imagem de fundo */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #taskbar {
+            background-color: #1e1e1e;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        #start-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 15px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .taskbar-item {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 1.2rem;
+        }
+
+        .taskbar-item:hover {
+            text-decoration: underline;
+        }
+
+        .window-container {
+            display: flex; /* Adicionado um contêiner flexível para as janelas */
+        }
+
+        .window {
+            background-color: #fff;
+            color: #fff; /* Alterado para branco */
+            position: relative;
+            padding: 20px;
+            border: 2px solid #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            display: none;
+            flex: 1; /* Para ocupar o espaço igualmente */
+            margin: 10px; /* Espaçamento entre as janelas */
+        }
+
+        .window h2 {
+            font-size: 1.5rem;
+            color: #000; /* Alterado para preto */
+        }
+
+        .window p {
+            font-size: 1.2rem;
+            color: #000; /* Alterado para preto */
+        }
+
+        .window-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .window-button:hover {
+            background-color: #0056b3;
+        }
+
+        .desktop-icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .desktop-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Estilos para o menu pop-up */
+        #start-menu {
+            background-color: #1e1e1e;
+            color: #fff;
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            width: 200px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            display: none;
+            z-index: 2;
+        }
+
+        #start-menu-header {
+            background-color: #007bff;
+            padding: 5px;
+            text-align: center;
+        }
+
+        #start-menu-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .start-menu-item {
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .start-menu-item:hover {
+            background-color: #0056b3;
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="desktop">
+        <!-- Barra de Tarefas -->
+        <div id="taskbar">
+            <button id="start-button" onclick="toggleStartMenu()">&#9776;</button>
+            <a href="#" class="taskbar-item" onclick="openWindow('google')">
+                <img src="google.png" alt="Google" style="width: 30px; height: 30px;">
+            </a>
+            <a href="#" class="taskbar-item" onclick="openWindow('arquivos')">
+                <img src="file-icon.png" alt="Arquivos" style="width: 30px; height: 30px;">
+            </a>
+            <a href="#" class="taskbar-item" onclick="openWindow('loja')">
+                <img src="microsoft-store.png" alt="Loja de Apps" style="width: 30px; height: 30px;">
+            </a>
+        </div>
+
+        <!-- Ícones na Área de Trabalho (Arquivos Etapa 1, 2, 3) -->
+        <div class="desktop-icon" style="top: 50px; left: 50px;" onclick="openWindow('etapa1')">
+            <img src="file-icon.png" alt="Ícone de Arquivo">
+            Etapa 1
+        </div>
+        <div class="desktop-icon" style="top: 50px; left: 150px;" onclick="openWindow('etapa2')">
+            <img src="file-icon.png" alt="Ícone de Arquivo">
+            Etapa 2
+        </div>
+        <div class="desktop-icon" style="top: 50px; left: 250px;" onclick="openWindow('etapa3')">
+            <img src="file-icon.png" alt="Ícone de Arquivo">
+            Etapa 3
+        </div>
+
+        <div class="desktop-icon" style="top: 50px; left: 350px;" onclick="openWindow('etapa4')">
+            <img src="file-icon.png" alt="Ícone de Arquivo">
+            Etapa 4
+        </div>
+
+        <div class="desktop-icon" style="top: 50px; left: 450px;" onclick="openWindow('etapa5')">
+            <img src="file-icon.png" alt="Ícone de Arquivo">
+            Etapa 5
+        </div>
+
+        <div class="desktop-icon" style="top: 50px; left: 550px;" onclick="openWindow('etapa6')">
+            <img src="file-icon.png" alt="Ícone de Arquivo">
+            Etapa 6
+        </div>
+
+        <!-- Janelas de Etapas -->
+        <div class="window-container">
+            <div class="window" id="etapa1">
+                <h2>Etapa 1: Ligando o Computador</h2>
+                <p>Quando você pressiona o botão de ligar, a fonte de alimentação fornece energia para todos os componentes do computador.</p>
+                <button class="window-button" onclick="closeWindow('etapa1')">Fechar</button>
+            </div>
+
+            <div class="window" id="etapa2">
+                <h2>Etapa 2: BIOS (Basic Input/Output System)</h2>
+                <p>A BIOS é a primeira coisa a ser ativada quando você liga o computador. Ela executa verificações iniciais de hardware, como o POST (Power-On Self-Test), para garantir que todos os componentes estejam funcionando corretamente. A BIOS também carrega o sistema operacional a partir do disco rígido ou de um dispositivo de inicialização, como um pendrive.</p>
+                <button class="window-button" onclick="closeWindow('etapa2')">Fechar</button>
+            </div>
+
+            <div class="window" id="etapa3">
+                <h2>Etapa 3: Sistema Operacional</h2>
+                <p>O sistema operacional é o software que controla o hardware do computador. Ele gerencia recursos como processadores, memória, dispositivos de armazenamento e periféricos. Além disso, fornece uma interface para que os usuários possam executar programas e realizar tarefas.</p>
+                <button class="window-button" onclick="closeWindow('etapa3')">Fechar</button>
+            </div>
+
+            <div class="window" id="etapa4">
+                <h2>Etapa 4: Inicialização do Sistema Operacional</h2>
+                <p>Depois que a BIOS carrega o sistema operacional, o SO inicia seus processos. Ele carrega drivers para hardware específico, configurações de rede e outros componentes necessários para o funcionamento adequado. O sistema operacional exibe a tela de login ou a área de trabalho, dependendo da configuração do computador.</p>
+                <button class="window-button" onclick="closeWindow('etapa4')">Fechar</button>
+            </div>
+
+            <div class="window" id="etapa5">
+                <h2>Etapa 5: Execução de Programas</h2>
+                <p>Com o sistema operacional carregado, você pode executar programas e aplicativos. O sistema operacional aloca recursos, como CPU e memória, para esses programas e gerencia a interação entre eles. Você pode iniciar navegadores da web, editores de texto, jogos e muitos outros tipos de software.</p>
+                <button class="window-button" onclick="closeWindow('etapa5')">Fechar</button>
+            </div>
+
+            <div class="window" id="etapa6">
+                <h2>Etapa 6: Encerramento do Computador</h2>
+                <p>Quando você decide desligar o computador, o sistema operacional fecha os programas em execução, salva os dados e fecha os arquivos abertos.</p>
+                <button class="window-button" onclick="closeWindow('etapa6')">Fechar</button>
+            </div>
+        </div>
+        <div class="desktop-icon" style="top: 50px; left: 650px;" onclick="openWindow('Fontes')">
+            <img src="file-icon.png" alt="Ícone de Arquivo">
+            Fontes
+        </div>
+    
+        <div class="window" id="Fontes">
+            <h2>Fontes de Pesquisa</h2>
+            <p>Esses foram os sites, onde coletamos informações para realizar o trabalho</p>
+            <ul style="list-style-type: square; margin-left: 20px;">
+                <li>
+                    <a href="https://www.techtudo.com.br/noticias/2021/06/o-que-e-boot-no-pc-entenda-o-processo-de-inicializacao.ghtml" target="_blank">
+                        O que é boot no PC? Entenda o processo de inicialização. (techtudo, 2021)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.buscape.com.br/notebook/conteudo/o-que-e-sistema-operacional" target="_blank">
+                        O que é sistema operacional? Qual a sua função? Entenda tudo. (buscape, 2022)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://canaltech.com.br/hardware/o-que-acontece-quando-ligamos-o-computador-138327/" target="_blank">
+                        O que acontece quando ligamos o computador?. (Canaltech, 2019)
+                    </a>
+                </li>
+            </ul>
+            <button class="window-button" onclick="closeWindow('Fontes')">Fechar</button>
+        </div>
+        
+
+
+        <div class="window" id="google">
+            <h2>Google</h2>
+            <p>O Google é um mecanismo de busca na web amplamente utilizado. Ele permite que você pesquise informações, imagens, vídeos e muito mais na internet.</p>
+            <button class="window-button" onclick="closeWindow('google')">Fechar</button>
+        </div>
+
+        <div class="window" id="arquivos">
+            <h2>Arquivos</h2>
+            <p>Aqui estão seus arquivos e pastas. Você pode organizar, abrir e editar seus documentos e mídia.</p>
+            <button class="window-button" onclick="closeWindow('arquivos')">Fechar</button>
+        </div>
+
+        <div class="window" id="loja">
+            <h2>Loja de Apps</h2>
+            <p>A Loja de Apps é o lugar onde você pode encontrar e baixar uma variedade de aplicativos para o seu computador.</p>
+            <button class="window-button" onclick="closeWindow('loja')">Fechar</button>
+        </div>
+
+        <div class="window" id="Power Point">
+            <h2>Power Point</h2>
+            <p>É o lugar onde, você pode criar diversas apresentações para você utilizar onde e quando quiser.</p>
+            <button class="window-button" onclick="closeWindow('Power Point')">Fechar</button>
+        </div>
+
+        <div class="window" id="Exel">
+            <h2>Exel</h2>
+            <p>É o lugar onde você pode organizar e fazer planilhas.</p>
+            <button class="window-button" onclick="closeWindow('Exel')">Fechar</button>
+        </div>
+
+        <div class="window" id="Word">
+            <h2>Word</h2>
+            <p>É a onde vc pode escrever, corrigir e editar diversos textos</p>
+            <button class="window-button" onclick="closeWindow('Word')">Fechar</button>
+        </div>
+
+        <!-- Menu Pop-up do Botão "Iniciar" -->
+        <div id="start-menu">
+            <div id="start-menu-header">
+                <h3>Iniciar</h3>
+            </div>
+            <ul id="start-menu-list">
+                <li class="start-menu-item" onclick="openWindow('Power Point')">
+                    <img src="Power point.png" alt="Power Point" class="app-icon">
+                    Power Point
+                </li>
+                <li class="start-menu-item" onclick="openWindow('Exel')">
+                    <img src="excel.png" alt="Arquivos" class="app-icon">
+                    Exel
+                </li>
+                <li class="start-menu-item" onclick="openWindow('Word')">
+                    <img src="word.png" alt="Loja de Apps" class="app-icon">
+                    Word
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function openWindow(windowId) {
+            document.getElementById(windowId).style.display = "block";
+        }
+
+        function closeWindow(windowId) {
+            document.getElementById(windowId).style.display = "none";
+        }
+
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('start-menu');
+            startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
